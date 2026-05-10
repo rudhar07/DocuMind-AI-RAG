@@ -14,11 +14,10 @@ export type ContextChunk = { text: string; page?: number; source: string };
  */
 export async function generateAnswer(question: string, context: ContextChunk[]): Promise<string> {
   const model = genAI.getGenerativeModel({
-    // gemini-2.5-flash is the current GA flash model. We don't use gemini-1.5-flash
-    // because it's been deprecated for newer accounts. If your /api/debug/models
-    // output doesn't include 2.5-flash, swap to one of: gemini-flash-latest,
-    // gemini-2.0-flash, or gemini-2.5-flash-lite.
-    model: "gemini-2.5-flash",
+    // gemma-4-31b-it sits on a different free-tier quota bucket than the
+    // gemini-* family, so it's not affected by the strict 20/day cap on
+    // gemini-2.5-flash. Capable enough for RAG-style extraction from 4 chunks.
+    model: "gemma-4-31b-it",
     generationConfig: { temperature: 0.2 },
   });
 

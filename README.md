@@ -35,8 +35,8 @@ INDEXING (once per upload)
 
 RETRIEVAL (each question)
 ┌──────────┐   ┌────────┐   ┌───────────┐   ┌──────────────┐
-│ Question │ → │ Embed  │ → │  Search   │ → │ Gemini 2.5   │ → answer
-│          │   │ query  │   │  top-k=4  │   │ Flash        │
+│ Question │ → │ Embed  │ → │  Search   │ → │ Gemma 4      │ → answer
+│          │   │ query  │   │  top-k=4  │   │ (31B, IT)    │
 └──────────┘   └────────┘   └───────────┘   └──────────────┘
 ```
 
@@ -62,7 +62,7 @@ This gives noticeably better retrieval quality than treating queries and documen
 
 ### Generation
 
-Google **Gemini 2.5 Flash** at `temperature: 0.2`. The system prompt is strictly extractive — the model is instructed to refuse to answer outside the document and cite page numbers inline.
+Google **Gemma 4 (31B, instruction-tuned)** at `temperature: 0.2`. The system prompt is strictly extractive — the model is instructed to refuse to answer outside the document and cite page numbers inline.
 
 ---
 
@@ -71,7 +71,7 @@ Google **Gemini 2.5 Flash** at `temperature: 0.2`. The system prompt is strictly
 | Layer        | Tool                                            |
 | ------------ | ----------------------------------------------- |
 | Frontend     | Next.js 14 · React 18 · TypeScript · Tailwind   |
-| LLM          | Google Gemini 2.5 Flash                         |
+| LLM          | Google Gemma 4 (31B, instruction-tuned)         |
 | Embeddings   | Google `gemini-embedding-001` (auto-discovered, 768-dim) |
 | Vector DB    | Supabase Postgres + pgvector (HNSW index)       |
 | PDF parsing  | pdf-parse                                       |

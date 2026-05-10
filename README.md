@@ -35,8 +35,9 @@ INDEXING (once per upload)
 
 RETRIEVAL (each question)
 ┌──────────┐   ┌────────┐   ┌───────────┐   ┌──────────────┐
-│ Question │ → │ Embed  │ → │  Search   │ → │ Gemma 4      │ → answer
-│          │   │ query  │   │  top-k=4  │   │ (31B, IT)    │
+│ Question │ → │ Embed  │ → │  Search   │ → │ Gemini       │ → answer
+│          │   │ query  │   │  top-k=4  │   │ (fallback    │
+│          │   │        │   │           │   │  chain)      │
 └──────────┘   └────────┘   └───────────┘   └──────────────┘
 ```
 
@@ -62,7 +63,9 @@ This gives noticeably better retrieval quality than treating queries and documen
 
 ### Generation
 
-Google **Gemma 4 (31B, instruction-tuned)** at `temperature: 0.2`. The system prompt is strictly extractive — the model is instructed to refuse to answer outside the document and cite page numbers inline.
+Google Gemini family at `temperature: 0.2`, behind a **fallback chain**: `gemini-2.5-flash-lite` → `gemini-flash-lite-latest` → `gemini-2.0-flash-lite` → `gemini-2.5-flash` → `gemini-flash-latest` → `gemma-4-31b-it`. Free-tier quotas vary per model per account, and the system silently falls through on 429 / 500 / quota errors so a single model running out doesn't break the app. The first successful model is cached for the process lifetime.
+
+The prompt uses a few-shot pattern with `<answer>...</answer>` tag wrapping and defensive regex extraction — the model is instructed to refuse to answer outside the document and cite page numbers inline.
 
 ---
 
@@ -71,7 +74,7 @@ Google **Gemma 4 (31B, instruction-tuned)** at `temperature: 0.2`. The system pr
 | Layer        | Tool                                            |
 | ------------ | ----------------------------------------------- |
 | Frontend     | Next.js 14 · React 18 · TypeScript · Tailwind   |
-| LLM          | Google Gemma 4 (31B, instruction-tuned)         |
+| LLM          | Gemini family with fallback chain (lite → flash → gemma) |
 | Embeddings   | Google `gemini-embedding-001` (auto-discovered, 768-dim) |
 | Vector DB    | Supabase Postgres + pgvector (HNSW index)       |
 | PDF parsing  | pdf-parse                                       |

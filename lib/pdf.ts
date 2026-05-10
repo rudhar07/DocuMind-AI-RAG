@@ -1,6 +1,8 @@
-// Use the inner path of pdf-parse to skip the package's debug-mode test-file load,
-// which trips up bundlers when the file is ingested by webpack.
-import pdfParse from "pdf-parse/lib/pdf-parse.js";
+// pdf-parse's index file does a debug-mode test-file load that would normally
+// trip up webpack. We avoid that by setting `serverComponentsExternalPackages`
+// in next.config.js, which tells Next to load pdf-parse from node_modules at
+// runtime instead of bundling it.
+import pdfParse from "pdf-parse";
 
 export type ParsedPage = { page: number; text: string };
 

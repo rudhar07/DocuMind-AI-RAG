@@ -25,11 +25,18 @@ let cachedModel: string | null = null;
 
 function isRetryable(err: any): boolean {
   const msg = String(err?.message ?? err);
+  // Anything indicating the upstream model is rate-limited, quota-zeroed,
+  // or temporarily unhealthy → fall through to the next model in the chain.
   return (
     msg.includes("429") ||
     msg.includes("500") ||
+    msg.includes("502") ||
+    msg.includes("503") ||
+    msg.includes("504") ||
     msg.includes("Too Many Requests") ||
+    msg.includes("Service Unavailable") ||
     msg.includes("Internal") ||
+    msg.includes("high demand") ||
     msg.toLowerCase().includes("quota")
   );
 }

@@ -8,7 +8,7 @@ DocuMind AI is a NotebookLM-style retrieval-augmented generation (RAG) applicati
 
 ## Live demo
 
-🔗 **[your-vercel-url.vercel.app](#)** _(replace this once deployed)_
+🔗 **[docu-mind-ai-rag.vercel.app](https://docu-mind-ai-rag.vercel.app/)**
 
 ---
 
@@ -85,8 +85,8 @@ Google **Gemini 2.5 Flash** at `temperature: 0.2`. The system prompt is strictly
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/your-username/documind-ai.git
-cd documind-ai
+git clone https://github.com/rudhar07/DocuMind-AI-RAG.git
+cd DocuMind-AI-RAG
 npm install
 ```
 

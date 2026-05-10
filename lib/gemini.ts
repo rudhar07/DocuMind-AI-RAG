@@ -28,21 +28,15 @@ export async function generateAnswer(question: string, context: ContextChunk[]):
     )
     .join("\n\n---\n\n");
 
-  const prompt = `You are DocuMind AI, a careful research assistant. Answer the user's question using ONLY the document context below.
+  // Flowing prose, no section headers. Gemma 4 treats labeled sections like
+  // "RULES" / "USER QUESTION" / "ANSWER" as output structure to echo, which
+  // produces chain-of-thought leaks. The "Do not restate..." line is the
+  // critical anti-leak instruction.
+  const prompt = `Using only the following passages, answer the user's question briefly and directly. If the passages do not contain the answer, reply exactly: "I couldn't find this in the document." Cite page numbers inline like (p. 5). Do not restate the question, do not list the passages, do not show your reasoning — output only the final answer.
 
-RULES
-- Use only facts present in the context. Do not draw on outside knowledge.
-- If the answer is not contained in the context, reply exactly: "I couldn't find this in the document."
-- Cite the page number inline when you state a fact, e.g. "(p. 4)".
-- Be concise. Prefer bullet points for lists. No filler, no preamble.
-
-DOCUMENT CONTEXT
 ${contextBlock}
 
-USER QUESTION
-${question}
-
-ANSWER`;
+${question}`;
 
   const result = await model.generateContent(prompt);
   return result.response.text();

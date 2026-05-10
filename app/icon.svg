@@ -1,0 +1,36 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dm-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="50%" stop-color="#d946ef"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="dm-lines" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#db2777"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#dm-bg)"/>
+
+  <path
+    d="M 120 110 H 392 Q 432 110 432 150 V 350 Q 432 390 392 390 H 248 L 172 442 L 196 390 H 120 Q 80 390 80 350 V 150 Q 80 110 120 110 Z"
+    fill="white"
+  />
+
+  <rect x="128" y="174" width="256" height="20" rx="10" fill="url(#dm-lines)" opacity="0.85"/>
+  <rect x="128" y="218" width="200" height="20" rx="10" fill="url(#dm-lines)" opacity="0.65"/>
+  <rect x="128" y="262" width="232" height="20" rx="10" fill="url(#dm-lines)" opacity="0.5"/>
+  <rect x="128" y="306" width="160" height="20" rx="10" fill="url(#dm-lines)" opacity="0.35"/>
+
+  <path
+    d="M 416 80 L 426 106 L 452 116 L 426 126 L 416 152 L 406 126 L 380 116 L 406 106 Z"
+    fill="white"
+  />
+
+  <path
+    d="M 72 416 L 78 432 L 94 438 L 78 444 L 72 460 L 66 444 L 50 438 L 66 432 Z"
+    fill="white"
+    opacity="0.85"
+  />
+</svg>

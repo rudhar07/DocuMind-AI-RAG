@@ -1,4 +1,17 @@
 import { createClient } from "@supabase/supabase-js";
+import dns from "node:dns";
+
+// Override Node's default DNS resolution to use public resolvers (Google +
+// Cloudflare + Quad9). On some home/ISP networks the local resolver returns
+// EAI_AGAIN intermittently when Node tries to look up the Supabase hostname,
+// even though the project is healthy and reachable from the browser. Browsers
+// use a separate resolver path so they don't see the same failures. Routing
+// Node's lookups through public DNS makes this reliable.
+//
+// Also prefer IPv4 first — some networks have broken IPv6 paths that cause
+// fetch() to hang on AAAA lookups before falling back.
+dns.setDefaultResultOrder("ipv4first");
+dns.setServers(["8.8.8.8", "1.1.1.1", "9.9.9.9"]);
 
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
